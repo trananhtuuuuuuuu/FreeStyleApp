@@ -1,0 +1,51 @@
+# Build artifacts
+**/bin/
+**/obj/
+**/out/
+
+# IDE files
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+
+# Docker files
+.dockerignore
+Dockerfile*
+docker-compose*
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Scripts (not needed in container)
+scripts/
+
+# Documentation
+*.md
+README.md
+
+# Logs
+**/logs/
+*.log
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+
+# Node modules (if any)
+**/node_modules/
+
+# Temporary files
+**/tmp/
+**/temp/
+
+# Environment variables (secrets)
+.env
+
+# Keep the example
+!.env.example

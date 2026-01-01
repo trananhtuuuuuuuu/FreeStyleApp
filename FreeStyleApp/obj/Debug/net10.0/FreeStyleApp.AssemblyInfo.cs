@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FreeStyleApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e512dab4651dcae5f8ad43345d2ca0407b7ec84f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b220c4939a7370b3797e5aec532a1bbc11e4e0ea")]
 [assembly: System.Reflection.AssemblyProductAttribute("FreeStyleApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FreeStyleApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

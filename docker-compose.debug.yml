@@ -1,0 +1,50 @@
+version: '3.8'
+
+name: freestyle
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: freestyle_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: free_style_app
+    ports:
+      - "5555:5432"
+    volumes:
+      - existing_postgres_data:/var/lib/postgresql/data  # ← Use existing
+    networks:
+      - freestyle_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ./FreeStyleApp
+      dockerfile: Dockerfile
+    container_name: freestyle_api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=free_style_app;Username=postgres;Password=123456
+    ports:
+      - "9000:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - freestyle_network
+
+volumes:
+  existing_postgres_data:
+    external: true  # ← Tell docker this volume already exists
+    name: 1b1dc621c98ecdb290eb0094ed83bec54c5ad8c37d79f06fc2649d7c8222f242  # ← Your existing volume
+
+networks:
+  freestyle_network:
+    driver: bridge

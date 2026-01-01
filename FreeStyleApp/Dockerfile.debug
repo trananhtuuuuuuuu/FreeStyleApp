@@ -1,0 +1,30 @@
+# Use the official .NET SDK image for building
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+
+# Copy csproj and restore dependencies
+COPY ["FreeStyleApp.csproj", "./"]
+RUN dotnet restore "FreeStyleApp.csproj"
+
+# Copy everything else and build
+COPY . .
+RUN dotnet build "FreeStyleApp.csproj" -c Release -o /app/build
+
+# Publish the application
+FROM build AS publish
+RUN dotnet publish "FreeStyleApp.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+# Use the runtime image for running the app
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
+WORKDIR /app
+EXPOSE 8080
+EXPOSE 8081
+
+# Copy published files from publish stage
+COPY --from=publish /app/publish .
+
+# Set environment variable
+ENV ASPNETCORE_URLS=http://+:8080
+
+# Run the application
+ENTRYPOINT ["dotnet", "FreeStyleApp.dll"]
